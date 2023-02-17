@@ -1,0 +1,100 @@
+*,
+:before,
+:after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: greyscale;
+    zoom: 1;
+    *zoom: 1;
+
+    /* ensures a modal filling the screen doesn't add that sudden 15px */
+    overflow: hidden;
+    font-size: 16px;
+}
+
+html, body {
+    min-height: 100%;
+    min-width: 100%;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    font-family: Ubuntu, Roboto, Open Sans, sans-serif;
+    font-size: 100%;
+    line-height: 1;
+    overflow-y: scroll;
+}
+
+::-moz-selection {
+    background: #6C7A89;
+    color: #FFFFFF;
+    text-shadow: none;
+}
+
+::selection {
+    background: #6C7A89;
+    color: #FFFFFF;
+    text-shadow: none;
+}
+
+:focus {
+    outline: 0;
+}
+
+legend,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+img,
+.pt-navbar.pt-fixed-top .pt-navbar-heading {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+a h1,
+a h2,
+a h3,
+a h4,
+a h5,
+a h6 {
+    cursor: auto;
+}
+
+#grid {
+    margin: 0 auto;
+    column-count: 5;
+    column-fill: balance;
+    column-span: all;
+    overflow: auto;
+}
+
+.img {
+    will-change: opacity;
+    opacity: 1;
+    transition: opacity .1s;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+}
+
+.img.img--loading {
+    opacity: 0;
+    transition: opacity .15s ease-in;
+    background-color: #AACCEE;
+}
+
+.img.img--error {
+    background-color: #FF4400;
+}
