@@ -14,8 +14,8 @@ import {
     let rendering = false;
 
     const res = await Promise.all([
-        fetch(`/fake-oahu/public/fake/png.json`),
-        fetch(`/fake-oahu/public/fake/jpg.json`),
+        fetch(`/image-grid/fake/png.json`),
+        fetch(`/image-grid/fake/jpg.json`),
         // fetch(`/gun_images.json`),
     ]);
 
