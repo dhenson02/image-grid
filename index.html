@@ -35,111 +35,8 @@
     <link rel="shortcut icon"
           href="favicon.ico"
           type="image/x-icon" />
-
-    <script type="text/javascript">
-        let canvas, ctx, flag = false, prevX = 0, currX = 0, prevY = 0, currY = 0, ws_in, ws_out;
-        let new_lines = [];
-
-        function main() { return;
-
-            canvas = document.getElementById('can');
-            ctx = canvas.getContext("2d");
-            // let w = canvas.width;
-            // let h = canvas.height;
-
-            ctx.strokeStyle = 'black';
-            ctx.lineWidth = 1;
-
-            canvas.addEventListener("mousemove", function (e) {
-                if ( ws_out && ws_out.readyState === ws_out.CLOSED ) {
-                    ws_out = null;
-                }
-
-                if ( !ws_out ) {
-                    ws_out = makeWebsocket(`send`);
-                    ws_out.onclose = function () {
-                        ws_out = null;
-                    };
-                }
-
-                if (flag) {
-                    prevX = currX;
-                    prevY = currY;
-                    currX = e.clientX / window.innerWidth * 720;
-                    currY = e.clientY / window.innerHeight * 480;
-
-                    /* Send to the server how we drew */
-                    ws_out.send(Uint16Array.of(prevX, prevY, currX, currY));
-                }
-            }, { passive: true, capture: false, once: false });
-
-            canvas.addEventListener("mousedown", function (e) {
-                currX = e.clientX / window.innerWidth * 720;
-                currY = e.clientY / window.innerHeight * 480;
-                flag = true;
-            }, false);
-
-            canvas.addEventListener("mouseup", function (e) {
-                flag = false;
-            }, false);
-
-            canvas.addEventListener("mouseout", function (e) {
-                flag = false;
-            }, false);
-
-            function makeWebsocket ( type ) {
-                /* Connect to the server */
-                let ws = new WebSocket(`wss://doom/draw/${type}`);
-                ws.binaryType = 'arraybuffer';
-
-                ws.onopen = () => {
-                    /* Join the "room" of canvas 1 */
-                };
-
-                if ( type === `listen` ) {
-                    /* For every message we receive */
-                    ws.onmessage = ( message ) => {
-                        /* Request a new animation frame on first draw */
-                        if ( new_lines.length === 0 ) {
-                            window.requestAnimationFrame(() => {
-                                ctx.beginPath();
-
-                                new_lines.forEach(( li ) => {
-                                    ctx.moveTo(li[ 0 ], li[ 1 ]);
-                                    ctx.lineTo(li[ 2 ], li[ 3 ]);
-                                });
-
-                                ctx.stroke();
-                                ctx.closePath();
-
-                                new_lines = [];
-                            });
-                        }
-                        /* Add this draw to the pending buffer */
-                        const dataArray = new Uint16Array(message.data);
-                        new_lines.push(dataArray);
-                    };
-                }
-
-                return ws;
-            }
-
-            if ( ws_in && ws_in.readyState === ws_in.CLOSED ) {
-                ws_in = null;
-            }
-
-            if ( !ws_in ) {
-                ws_in = makeWebsocket(`listen`);
-                ws_in.onclose = function () {
-                    ws_in = null;
-                };
-            }
-        }
-
-    </script>
 </head>
-    <body onload="main()"
-          style="height: 100vh;">
+    <body style="height: 100vh;">
 
         <div id="loader">
             <div class="spinner">
@@ -151,12 +48,6 @@
         </div>
 
         <div id="grid"></div>
-
-        <!--<canvas
-            id="can"
-            width="720"
-            height="480"
-            style="height: 100%; width: 100%;"></canvas>-->
 
         <script
             type="module"

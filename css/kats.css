@@ -15,14 +15,9 @@ html {
     font-size: 16px;
 }
 
-html, body {
-    min-height: 100%;
-    min-width: 100%;
+body {
     height: 100%;
     width: 100%;
-}
-
-body {
     font-family: Ubuntu, Roboto, Open Sans, sans-serif;
     font-size: 100%;
     line-height: 1;
@@ -73,11 +68,35 @@ a h6 {
 }
 
 #grid {
-    margin: 0 auto;
-    column-count: 5;
+    margin: 0;
+    column-count: 1;
     column-fill: balance;
     column-span: all;
     overflow: auto;
+}
+
+@media screen and (min-width: 480px) {
+    #grid {
+        column-count: 2;
+    }
+}
+
+@media screen and (min-width: 640px) {
+    #grid {
+        column-count: 3;
+    }
+}
+
+@media screen and (min-width: 860px) {
+    #grid {
+        column-count: 4;
+    }
+}
+
+@media screen and (min-width: 1080px) {
+    #grid {
+        column-count: 5;
+    }
 }
 
 .img {
